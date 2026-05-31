@@ -1,0 +1,272 @@
+    Checking zeroperp v0.1.0 (/home/abhi/Downloads/optimus-the-ai-platform-to-build-and-ship/zeroperp/programs/zeroperp)
+error: init_if_needed requires that anchor-lang be imported with the init-if-needed cargo feature enabled. Carefully read the init_if_needed docs before using this feature to make sure you know how to protect yourself against re-initialization attacks.
+ --> programs/zeroperp/src/instructions/deposit_margin.rs:8:9
+  |
+8 |         init_if_needed,
+  |         ^^^^^^^^^^^^^^
+
+error[E0432]: unresolved import `crate`
+  --> programs/zeroperp/src/lib.rs:12:1
+   |
+12 | #[program]
+   | ^^^^^^^^^^ could not find `__client_accounts_deposit_margin` in the crate root
+   |
+   = note: this error originates in the attribute macro `program` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: ambiguous glob re-exports
+ --> programs/zeroperp/src/instructions/mod.rs:6:9
+  |
+6 | pub use initialize_vault::*;
+  |         ^^^^^^^^^^^^^^^^^^^ the name `handler` in the value namespace is first re-exported here
+...
+9 | pub use liquidate::*;
+  |         ------------ but the name `handler` in the value namespace is also re-exported here
+  |
+  = note: `#[warn(ambiguous_glob_reexports)]` on by default
+
+error[E0277]: the trait bound `instructions::deposit_margin::DepositMargin<'_>: Bumps` is not satisfied
+  --> programs/zeroperp/src/instructions/deposit_margin.rs:25:21
+   |
+25 | pub fn handler(ctx: Context<DepositMargin>, amount: u64) -> Result<()> {
+   |                     ^^^^^^^^^^^^^^^^^^^^^^ the trait `Bumps` is not implemented for `instructions::deposit_margin::DepositMargin<'_>`
+   |
+   = help: the following other types implement trait `Bumps`:
+             CreateNonceAccount<'info>
+             CreateNonceAccountWithSeed<'info>
+             anchor_lang::system_program::AdvanceNonceAccount<'info>
+             anchor_lang::system_program::Allocate<'info>
+             anchor_lang::system_program::AllocateWithSeed<'info>
+             anchor_lang::system_program::Assign<'info>
+             anchor_lang::system_program::AssignWithSeed<'info>
+             anchor_lang::system_program::AuthorizeNonceAccount<'info>
+           and 8 others
+note: required by a bound in `anchor_lang::context::Context`
+  --> /home/abhi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anchor-lang-1.0.2/src/context.rs:26:30
+   |
+26 | pub struct Context<'info, T: Bumps> {
+   |                              ^^^^^ required by this bound in `Context`
+
+error[E0277]: the trait bound `instructions::deposit_margin::DepositMargin<'_>: Bumps` is not satisfied
+  --> programs/zeroperp/src/lib.rs:20:32
+   |
+20 |     pub fn deposit_margin(ctx: Context<DepositMargin>, amount: u64) -> Result<()> {
+   |                                ^^^^^^^^^^^^^^^^^^^^^^ the trait `Bumps` is not implemented for `instructions::deposit_margin::DepositMargin<'_>`
+   |
+   = help: the following other types implement trait `Bumps`:
+             CreateNonceAccount<'info>
+             CreateNonceAccountWithSeed<'info>
+             anchor_lang::system_program::AdvanceNonceAccount<'info>
+             anchor_lang::system_program::Allocate<'info>
+             anchor_lang::system_program::AllocateWithSeed<'info>
+             anchor_lang::system_program::Assign<'info>
+             anchor_lang::system_program::AssignWithSeed<'info>
+             anchor_lang::system_program::AuthorizeNonceAccount<'info>
+           and 8 others
+note: required by a bound in `anchor_lang::context::Context`
+  --> /home/abhi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anchor-lang-1.0.2/src/context.rs:26:30
+   |
+26 | pub struct Context<'info, T: Bumps> {
+   |                              ^^^^^ required by this bound in `Context`
+
+error[E0277]: the trait bound `instructions::deposit_margin::DepositMargin<'_>: Bumps` is not satisfied in `anchor_lang::context::Context<'_, instructions::deposit_margin::DepositMargin<'_>>`
+  --> programs/zeroperp/src/instructions/deposit_margin.rs:25:21
+   |
+25 | pub fn handler(ctx: Context<DepositMargin>, amount: u64) -> Result<()> {
+   |                     ^^^^^^^^^^^^^^^^^^^^^^ unsatisfied trait bound
+   |
+   = help: within `anchor_lang::context::Context<'_, instructions::deposit_margin::DepositMargin<'_>>`, the trait `Bumps` is not implemented for `instructions::deposit_margin::DepositMargin<'_>`
+   = help: the following other types implement trait `Bumps`:
+             CreateNonceAccount<'info>
+             CreateNonceAccountWithSeed<'info>
+             anchor_lang::system_program::AdvanceNonceAccount<'info>
+             anchor_lang::system_program::Allocate<'info>
+             anchor_lang::system_program::AllocateWithSeed<'info>
+             anchor_lang::system_program::Assign<'info>
+             anchor_lang::system_program::AssignWithSeed<'info>
+             anchor_lang::system_program::AuthorizeNonceAccount<'info>
+           and 8 others
+note: required because it appears within the type `anchor_lang::context::Context<'_, instructions::deposit_margin::DepositMargin<'_>>`
+  --> /home/abhi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anchor-lang-1.0.2/src/context.rs:26:12
+   |
+26 | pub struct Context<'info, T: Bumps> {
+   |            ^^^^^^^
+help: function arguments must have a statically known size, borrowed types always have a known size
+   |
+25 | pub fn handler(ctx: &Context<DepositMargin>, amount: u64) -> Result<()> {
+   |                     +
+
+error[E0308]: mismatched types
+   --> programs/zeroperp/src/instructions/deposit_margin.rs:38:9
+    |
+37  |     let cpi_context = CpiContext::new(
+    |                       --------------- arguments to this function are incorrect
+38  |         ctx.accounts.system_program.to_account_info(),
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Pubkey`, found `AccountInfo<'_>`
+    |
+note: associated function defined here
+   --> /home/abhi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anchor-lang-1.0.2/src/context.rs:188:12
+    |
+188 |     pub fn new(program_id: Pubkey, accounts: T) -> Self {
+    |            ^^^
+
+error[E0599]: no associated item named `__ANCHOR_IX_PARAM_COUNT` found for struct `instructions::deposit_margin::DepositMargin` in the current scope
+  --> programs/zeroperp/src/lib.rs:12:1
+   |
+12 | #[program]
+   | ^^^^^^^^^^ associated item not found in `instructions::deposit_margin::DepositMargin<'_>`
+   |
+  ::: programs/zeroperp/src/instructions/deposit_margin.rs:6:1
+   |
+6  | pub struct DepositMargin<'info> {
+   | ------------------------------- associated item `__ANCHOR_IX_PARAM_COUNT` not found for this struct
+   |
+   = note: this error originates in the attribute macro `program` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no associated item named `__anchor_validate_ix_arg_type_0` found for struct `instructions::deposit_margin::DepositMargin` in the current scope
+  --> programs/zeroperp/src/lib.rs:12:1
+   |
+12 | #[program]
+   | ^^^^^^^^^^ associated item not found in `instructions::deposit_margin::DepositMargin<'_>`
+   |
+  ::: programs/zeroperp/src/instructions/deposit_margin.rs:6:1
+   |
+6  | pub struct DepositMargin<'info> {
+   | ------------------------------- associated item `__anchor_validate_ix_arg_type_0` not found for this struct
+   |
+   = note: this error originates in the attribute macro `program` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0277]: the trait bound `instructions::deposit_margin::DepositMargin<'_>: Bumps` is not satisfied
+  --> programs/zeroperp/src/lib.rs:20:40
+   |
+20 |     pub fn deposit_margin(ctx: Context<DepositMargin>, amount: u64) -> Result<()> {
+   |                                        ^^^^^^^^^^^^^ the trait `Bumps` is not implemented for `instructions::deposit_margin::DepositMargin<'_>`
+   |
+   = help: the following other types implement trait `Bumps`:
+             CreateNonceAccount<'info>
+             CreateNonceAccountWithSeed<'info>
+             anchor_lang::system_program::AdvanceNonceAccount<'info>
+             anchor_lang::system_program::Allocate<'info>
+             anchor_lang::system_program::AllocateWithSeed<'info>
+             anchor_lang::system_program::Assign<'info>
+             anchor_lang::system_program::AssignWithSeed<'info>
+             anchor_lang::system_program::AuthorizeNonceAccount<'info>
+           and 8 others
+
+error[E0277]: the trait bound `instructions::deposit_margin::DepositMargin<'_>: Bumps` is not satisfied
+  --> programs/zeroperp/src/lib.rs:12:1
+   |
+12 | #[program]
+   | ^^^^^^^^^^ the trait `Bumps` is not implemented for `instructions::deposit_margin::DepositMargin<'_>`
+   |
+   = help: the following other types implement trait `Bumps`:
+             CreateNonceAccount<'info>
+             CreateNonceAccountWithSeed<'info>
+             anchor_lang::system_program::AdvanceNonceAccount<'info>
+             anchor_lang::system_program::Allocate<'info>
+             anchor_lang::system_program::AllocateWithSeed<'info>
+             anchor_lang::system_program::Assign<'info>
+             anchor_lang::system_program::AssignWithSeed<'info>
+             anchor_lang::system_program::AuthorizeNonceAccount<'info>
+           and 8 others
+   = note: this error originates in the attribute macro `program` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no function or associated item named `try_accounts` found for struct `instructions::deposit_margin::DepositMargin` in the current scope
+   --> programs/zeroperp/src/lib.rs:12:1
+    |
+12  | #[program]
+    | ^^^^^^^^^^ function or associated item not found in `instructions::deposit_margin::DepositMargin<'_>`
+    |
+   ::: programs/zeroperp/src/instructions/deposit_margin.rs:6:1
+    |
+6   | pub struct DepositMargin<'info> {
+    | ------------------------------- function or associated item `try_accounts` not found for this struct
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following trait defines an item `try_accounts`, perhaps you need to implement it:
+            candidate #1: `anchor_lang::Accounts`
+help: there is a method `try_into` with a similar name, but with different arguments
+   --> /home/abhi/.rustup/toolchains/1.89.0-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/convert/mod.rs:617:5
+    |
+617 |     fn try_into(self) -> Result<T, Self::Error>;
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = note: this error originates in the attribute macro `program` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0277]: the trait bound `instructions::deposit_margin::DepositMargin<'_>: anchor_lang::Accounts<'_, _>` is not satisfied
+  --> programs/zeroperp/src/lib.rs:12:1
+   |
+12 | #[program]
+   | ^^^^^^^^^^ the trait `anchor_lang::Accounts<'_, _>` is not implemented for `instructions::deposit_margin::DepositMargin<'_>`
+   |
+   = help: the following other types implement trait `anchor_lang::Accounts<'info, B>`:
+             `AccountLoader<'info, T>` implements `anchor_lang::Accounts<'info, B>`
+             `Box<T>` implements `anchor_lang::Accounts<'info, B>`
+             `CreateNonceAccount<'info>` implements `anchor_lang::Accounts<'info, CreateNonceAccountBumps>`
+             `CreateNonceAccountWithSeed<'info>` implements `anchor_lang::Accounts<'info, CreateNonceAccountWithSeedBumps>`
+             `Interface<'info, T>` implements `anchor_lang::Accounts<'info, B>`
+             `InterfaceAccount<'info, T>` implements `anchor_lang::Accounts<'info, B>`
+             `Migration<'info, From, To>` implements `anchor_lang::Accounts<'info, B>`
+             `Option<T>` implements `anchor_lang::Accounts<'info, B>`
+           and 23 others
+note: required by a bound in `anchor_lang::context::Context::<'info, T>::new`
+  --> /home/abhi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anchor-lang-1.0.2/src/context.rs:57:16
+   |
+57 |     T: Bumps + Accounts<'info, T::Bumps>,
+   |                ^^^^^^^^^^^^^^^^^^^^^^^^^ required by this bound in `Context::<'info, T>::new`
+58 | {
+59 |     pub fn new(
+   |            --- required by a bound in this associated function
+   = note: this error originates in the attribute macro `program` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0277]: the trait bound `instructions::deposit_margin::DepositMargin<'_>: Bumps` is not satisfied in `anchor_lang::context::Context<'_, instructions::deposit_margin::DepositMargin<'_>>`
+  --> programs/zeroperp/src/lib.rs:20:32
+   |
+20 |     pub fn deposit_margin(ctx: Context<DepositMargin>, amount: u64) -> Result<()> {
+   |                                ^^^^^^^^^^^^^^^^^^^^^^ unsatisfied trait bound
+   |
+   = help: within `anchor_lang::context::Context<'_, instructions::deposit_margin::DepositMargin<'_>>`, the trait `Bumps` is not implemented for `instructions::deposit_margin::DepositMargin<'_>`
+   = help: the following other types implement trait `Bumps`:
+             CreateNonceAccount<'info>
+             CreateNonceAccountWithSeed<'info>
+             anchor_lang::system_program::AdvanceNonceAccount<'info>
+             anchor_lang::system_program::Allocate<'info>
+             anchor_lang::system_program::AllocateWithSeed<'info>
+             anchor_lang::system_program::Assign<'info>
+             anchor_lang::system_program::AssignWithSeed<'info>
+             anchor_lang::system_program::AuthorizeNonceAccount<'info>
+           and 8 others
+note: required because it appears within the type `anchor_lang::context::Context<'_, instructions::deposit_margin::DepositMargin<'_>>`
+  --> /home/abhi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anchor-lang-1.0.2/src/context.rs:26:12
+   |
+26 | pub struct Context<'info, T: Bumps> {
+   |            ^^^^^^^
+help: function arguments must have a statically known size, borrowed types always have a known size
+   |
+20 |     pub fn deposit_margin(ctx: &Context<DepositMargin>, amount: u64) -> Result<()> {
+   |                                +
+
+error[E0277]: the trait bound `instructions::deposit_margin::DepositMargin<'_>: Bumps` is not satisfied
+  --> programs/zeroperp/src/lib.rs:21:33
+   |
+21 |         deposit_margin::handler(ctx, amount)
+   |                                 ^^^ the trait `Bumps` is not implemented for `instructions::deposit_margin::DepositMargin<'_>`
+   |
+   = help: the following other types implement trait `Bumps`:
+             CreateNonceAccount<'info>
+             CreateNonceAccountWithSeed<'info>
+             anchor_lang::system_program::AdvanceNonceAccount<'info>
+             anchor_lang::system_program::Allocate<'info>
+             anchor_lang::system_program::AllocateWithSeed<'info>
+             anchor_lang::system_program::Assign<'info>
+             anchor_lang::system_program::AssignWithSeed<'info>
+             anchor_lang::system_program::AuthorizeNonceAccount<'info>
+           and 8 others
+note: required by a bound in `anchor_lang::context::Context`
+  --> /home/abhi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anchor-lang-1.0.2/src/context.rs:26:30
+   |
+26 | pub struct Context<'info, T: Bumps> {
+   |                              ^^^^^ required by this bound in `Context`
+
+Some errors have detailed explanations: E0277, E0308, E0432, E0599.
+For more information about an error, try `rustc --explain E0277`.
+warning: `zeroperp` (lib) generated 1 warning
+error: could not compile `zeroperp` (lib) due to 15 previous errors; 1 warning emitted
